@@ -1,8 +1,5 @@
-const dialogflow = require("dialogflow");
-const config = require("../config/keys");
-const sessionClient = new dialogflow.SessionsClient();
 
-const session = sessionClient.sessionPath(config.googleProjectID, config.dialogflowFlowSession);
+const chatbot = require('../chatbot/chatbot');
 
 module.exports = app => {
 app.get("/", (req,res) => {
@@ -13,21 +10,9 @@ app.post("/api/df_text_query", async (req,res) => {
 
   console.log(req.body.text);
 
-    const request = {
-        session: session,
-        queryInput: {
-          text: {
-            text: req.body.text,
-            languageCode: config.LanguageCode,
-          },
-        },
-      };
+  let responses = await chatbot.textQuery(req.body.text, req.body.parameters);
 
-    
-    let responses = await sessionClient
-      .detectIntent(request);
-
-    res.send(responses[0].queryResult);  
+  res.send(responses[0].queryResult);  
 })
 
 app.post("/api/df_event_query", (req,res) => {
