@@ -1,11 +1,8 @@
 const dialogflow = require("dialogflow");
-const config = require("../congig/keys");
+const config = require("../config/keys");
 const sessionClient = new dialogflow.SessionsClient();
 
-const sessionPath = dialogflow.sessionPath(config.googleProjectID, config.dialogflowFlowSession);
-
-
-
+const sessionPath = sessionClient.sessionPath(config.googleProjectID, config.dialogflowFlowSession);
 
 module.exports = app => {
 app.get("/", (req,res) => {
@@ -15,7 +12,7 @@ app.get("/", (req,res) => {
 app.post("/api/df_text_query", (req,res) => {
 
     const request = {
-        session: sessionPath,
+        session: session,
         queryInput: {
           text: {
             text: req.body.text,
