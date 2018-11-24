@@ -11,9 +11,12 @@ const credentials = {
     private_key: config.googlePrivateKey
 }
 
+const sessionID = config.dialogflowFlowSession;
+const LanguageCode = config.LanguageCode;
+
 const sessionClient = new dialogflow.SessionsClient({projectID, credentials});
 
-const session = sessionClient.sessionPath(config.googleProjectID, config.dialogflowFlowSession);
+const session = sessionClient.sessionPath(projectID, sessionID);
 
 
 
@@ -26,7 +29,7 @@ module.exports = {
             queryInput: {
               text: {
                 text: text,
-                languageCode: config.LanguageCode
+                languageCode: LanguageCode
               },
             },
             queryParams: {
