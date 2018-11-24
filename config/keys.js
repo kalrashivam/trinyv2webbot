@@ -1,6 +1,5 @@
-module.exports = {
-    googleProjectID: "shivamtrial-ccc3f",
-    dialogflowFlowSession: "trial-bot-session",
-    LanguageCode: "en-Us",
-    
+if(process.env.NODE_ENV==="production") {
+    module.exports = require("./prod");
+} else {
+    module.exports = require("./dev"); 
 }
