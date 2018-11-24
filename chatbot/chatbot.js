@@ -36,7 +36,34 @@ module.exports = {
     },
 
 
-    handleAction: function(responses) {
+    eventQuery: async function(event, parameters= {}) {
+        console.log(text);
+        let self = module.exports;
+        const request = {
+            session: session,
+            queryInput: {
+              event: {
+                name: event,
+                languageCode: config.LanguageCode,
+              },
+            },
+            queryParams: {
+                payload:{
+                    data:parameters
+                }
+            }
+          };
+    
+        
+        let responses = await sessionClient
+          .detectIntent(request);
+        
+        responses = await self.handleAction(responses);
+        return responses;
+    },
+
+
+    handleAction: async function(responses) {
         return responses;
     }
 }
