@@ -1,5 +1,7 @@
 const express = require("express");
 const bodyparser = require("body-parser");
+const config = require("./config/keys.js");
+const mongoose = require("mongoose");
 app = express();
 
 app.use(bodyparser.json());
@@ -12,6 +14,9 @@ app.all("/*", function (req, res, next) {
     next();
 });
 
+
+mongoose.connect(config.mongoURI, {useNewUrlParser: true});
+require('./models/registeration.js');
 
 require('./routes/dialogFlowRoutes')(app);
 
